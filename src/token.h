@@ -9,31 +9,30 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
-#include <cstdint>
 #include <string>
+#include <utility>
 
-namespace token {
+namespace uc {
 
-enum class kind : uint8_t {
+enum class kind_t : uint8_t {
   INT = 0x0,
-  INTLITERAL,
+  INT_LITERAL,
   CHAR,
-  CHARLITERAL,
+  CHAR_LITERAL,
   FLOAT,
-  FLOATLITERAL,
+  FLOAT_LITERAL,
   STRING,
-  STRINGLITERAL,
+  STRING_LITERAL,
   IDENTIFIER,
-  ADDOPERATOR,
-  MULTOPERATOR,
-  RELOPERATOR,
-  ATROPERATOR,
+  ADD_OPERATOR,
+  MULT_OPERATOR,
+  REL_OPERATOR,
+  ATR_OPERATOR,
   IF,
   ELSE,
   FOR,
   WHILE,
   FE,
-  END,
   ERROR = 0xff
 };
 
@@ -50,19 +49,27 @@ public:
      @param _row The row that token is.
      @param _col The column that token is.
   */
-  Token(kind _token, std::string _text, unsigned _row, unsigned _col);
+  Token(kind_t _token, std::string _text, unsigned _row, unsigned _col);
   /**
      @brief It can print the class.
      @return std::string A string with the contents of the token.
   */
   std::string to_string() const;
+  /**
+     @brief It returns true if it is the final state token.
+     @return bool false if it has token to be read, true otherwise.
+   */
   bool has_ended() const;
+
+  std::pair<unsigned, unsigned> get_position() const;
+
+  kind_t get_kind() const;
 
 private:
   std::string text;
   unsigned row;
   unsigned col;
-  kind token;
+  kind_t token;
 };
 
 /**
@@ -70,7 +77,7 @@ private:
    @param token The token that want it the type.
    @return A string with the type's name.
 */
-std::string get_type(kind const token);
+std::string get_type(kind_t const token);
 }
 
 #endif /* TOKEN_H */

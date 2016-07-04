@@ -5,20 +5,19 @@
 #include <fstream>
 #include <string>
 
-namespace lexer {
+namespace uc {
 class Lexer {
 public:
-  Lexer(std::string source);
+  explicit Lexer(std::string source);
   bool is_ready() const;
-  token::Token get_next_token();
+  Token get_next_token();
 
 private:
   std::fstream code;
-  unsigned row = 0;
+  unsigned row = 1;
   unsigned col = 0;
 
-  char next_character();
-  token::Token get_token(token::kind token, std::string lexema) const;
+  Token get_token(kind_t token, std::string lexema) const;
 };
 }
 

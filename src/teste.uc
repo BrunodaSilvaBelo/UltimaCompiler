@@ -1,6 +1,9 @@
-if teste
-while if else teste
+if (teste <= a) {
+  int aux = 234;
+  real un = 2.34;
 
-		for 12.4 braca
+  while (teste)
+    a = a + 1;
 
-int float
+  return un + a;
+ }

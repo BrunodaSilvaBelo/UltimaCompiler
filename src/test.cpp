@@ -1,27 +1,38 @@
-#define CATCH_CONFIG_MAIN
-#include "catch/catch.hpp"
-#include "token.h"
+/**
+   @file test.cpp
+   @brief It contains the test of the ucc
 
-using namespace std;
+   @author Bruno da Silva Belo
+ */
+
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+#include "token.h"
+#include <string>
 
 TEST_CASE("Testing the type's tokens", "[token]") {
-  REQUIRE("Char" == token::get_type(token::kind::CHAR));
-  REQUIRE("Int" == token::get_type(token::kind::INT));
-  REQUIRE("Float" == token::get_type(token::kind::FLOAT));
-  REQUIRE("String" == token::get_type(token::kind::STRING));
-  REQUIRE("Error" == token::get_type(token::kind::ERROR));
-  REQUIRE("Identifier" == token::get_type(token::kind::IDENTIFIER));
-  REQUIRE("Int Literal" == token::get_type(token::kind::INTLITERAL));
-  REQUIRE("Char Literal" == token::get_type(token::kind::CHARLITERAL));
-  REQUIRE("Float Literal" == token::get_type(token::kind::FLOATLITERAL));
-  REQUIRE("String Literal" == token::get_type(token::kind::STRINGLITERAL));
-  REQUIRE("Add Operator" == token::get_type(token::kind::ADDOPERATOR));
-  REQUIRE("Rel Operator" == token::get_type(token::kind::RELOPERATOR));
-  REQUIRE("Atr Operator" == token::get_type(token::kind::ATROPERATOR));
-  REQUIRE("If Word" == token::get_type(token::kind::IF));
-  REQUIRE("Else Word" == token::get_type(token::kind::ELSE));
-  REQUIRE("While Word" == token::get_type(token::kind::WHILE));
-  REQUIRE("For Word" == token::get_type(token::kind::FOR));
-  REQUIRE("File's End" == token::get_type(token::kind::FE));
-  REQUIRE("End of the Lexer" == token::get_type(token::kind::END));
+  SECTION("Testing human case readness") {
+    REQUIRE("Char" == uc::get_type(uc::kind_t::CHAR));
+    REQUIRE("Int" == uc::get_type(uc::kind_t::INT));
+    REQUIRE("Float" == uc::get_type(uc::kind_t::FLOAT));
+    REQUIRE("String" == uc::get_type(uc::kind_t::STRING));
+    REQUIRE("Error" == uc::get_type(uc::kind_t::ERROR));
+    REQUIRE("Identifier" == uc::get_type(uc::kind_t::IDENTIFIER));
+    REQUIRE("Int Literal" == uc::get_type(uc::kind_t::INT_LITERAL));
+    REQUIRE("Char Literal" == uc::get_type(uc::kind_t::CHAR_LITERAL));
+    REQUIRE("Float Literal" == uc::get_type(uc::kind_t::FLOAT_LITERAL));
+    REQUIRE("String Literal" == uc::get_type(uc::kind_t::STRING_LITERAL));
+    REQUIRE("Add Operator" == uc::get_type(uc::kind_t::ADD_OPERATOR));
+    REQUIRE("Rel Operator" == uc::get_type(uc::kind_t::REL_OPERATOR));
+    REQUIRE("Atr Operator" == uc::get_type(uc::kind_t::ATR_OPERATOR));
+    REQUIRE("If Word" == uc::get_type(uc::kind_t::IF));
+    REQUIRE("Else Word" == uc::get_type(uc::kind_t::ELSE));
+    REQUIRE("While Word" == uc::get_type(uc::kind_t::WHILE));
+    REQUIRE("For Word" == uc::get_type(uc::kind_t::FOR));
+    REQUIRE("File's End" == uc::get_type(uc::kind_t::FE));
+  }
+}
+
+TEST_CASE("Testing the return of the lexer", "[lexer]") {
+  SECTION("Testing one token per input") {}
 }
