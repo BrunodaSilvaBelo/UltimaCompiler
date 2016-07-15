@@ -23,6 +23,7 @@ TEST_CASE("Testing the type's tokens", "[token]") {
     REQUIRE("Float Literal" == uc::get_type(uc::kind_t::FLOAT_LITERAL));
     REQUIRE("String Literal" == uc::get_type(uc::kind_t::STRING_LITERAL));
     REQUIRE("Add Operator" == uc::get_type(uc::kind_t::ADD_OPERATOR));
+    REQUIRE("Mult Operator" == uc::get_type(uc::kind_t::MULT_OPERATOR));
     REQUIRE("Rel Operator" == uc::get_type(uc::kind_t::REL_OPERATOR));
     REQUIRE("Atr Operator" == uc::get_type(uc::kind_t::ATR_OPERATOR));
     REQUIRE("If Word" == uc::get_type(uc::kind_t::IF));

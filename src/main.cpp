@@ -10,6 +10,7 @@
    @see http://llvm.org/docs/tutorial/LangImpl1.html
    @see http://clang.llvm.org/docs/ClangFormat.html
 */
+#include "gsl/gsl_assert.h"
 #include "lexer.h"
 #include "token.h"
 #include "util.h"
@@ -19,21 +20,17 @@
 #include <vector>
 
 int main(int argc, char** argv) {
-  if (argc < 2) {
-    printf("ucc source_code.uc\n");
-    return -1;
-  }
+  Expects(argc >= 2);
 
   uc::Lexer lexer(argv[1]);
   if (!lexer.is_ready()) {
-    printf("Error while opening the source code!\n");
+    fprintf(stderr, "Error while opening the source code!\n");
     return -1;
   }
 
   auto t = lexer.get_next_token();
   std::vector<uc::Token> tokens;
   while (!t.has_ended()) {
-    // printf("%s\n", t.to_string().c_str());
     tokens.push_back(t);
     t = lexer.get_next_token();
   }

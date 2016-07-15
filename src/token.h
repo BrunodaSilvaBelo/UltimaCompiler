@@ -13,7 +13,6 @@
 #include <utility>
 
 namespace uc {
-
 enum class kind_t : uint8_t {
   INT = 0x0,
   INT_LITERAL,
@@ -49,7 +48,7 @@ public:
      @param _row The row that token is.
      @param _col The column that token is.
   */
-  Token(kind_t _token, std::string _text, unsigned _row, unsigned _col);
+  Token(kind_t _token, std::string const& _text, unsigned _row, unsigned _col);
   /**
      @brief It can print the class.
      @return std::string A string with the contents of the token.
@@ -78,6 +77,6 @@ private:
    @return A string with the type's name.
 */
 std::string get_type(kind_t const token);
-}
+} // namespace uc
 
 #endif /* TOKEN_H */

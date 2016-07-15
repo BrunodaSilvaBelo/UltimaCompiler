@@ -9,7 +9,7 @@ struct characters {
 };
 }
 
-uc::Lexer::Lexer(std::string source) : code(std::move(source)) {}
+uc::Lexer::Lexer(std::string const& source) : code(std::move(source)) {}
 
 bool uc::Lexer::is_ready() const { return code.is_open(); }
 
@@ -106,7 +106,8 @@ uc::Token uc::Lexer::get_next_token() {
   return one_char_token(one_char);
 }
 
-uc::Token uc::Lexer::get_token(uc::kind_t token, std::string lexema) const {
+uc::Token uc::Lexer::get_token(uc::kind_t token,
+                               std::string const& lexema) const {
   return uc::Token(token, lexema, row,
                    col - static_cast<unsigned>(lexema.size()));
 }

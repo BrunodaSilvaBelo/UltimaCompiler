@@ -60,12 +60,12 @@ add_library ( ${LIB_NAME}
   ${LIBRARY_TYPE}
   ${SOURCE}
   )
-
 target_link_libraries( ${LIB_NAME} ${EXTRA_LIBS} )
-add_executable( "${PROJECT_NAME}code" src/main.cpp )
-add_executable( "${PROJECT_NAME}test" src/test.cpp )
 
+add_executable( "${PROJECT_NAME}code" src/main.cpp )
 target_link_libraries( "${PROJECT_NAME}code" ${LIB_NAME} )
+
+add_executable( "${PROJECT_NAME}test" src/test.cpp )
 target_link_libraries( "${PROJECT_NAME}test" ${LIB_NAME} )
 
 enable_testing( true )

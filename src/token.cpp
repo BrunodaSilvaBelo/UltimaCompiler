@@ -7,7 +7,8 @@
 
 #include "token.h"
 
-uc::Token::Token(kind_t _token, std::string _text, unsigned _row, unsigned _col)
+uc::Token::Token(kind_t _token, std::string const& _text, unsigned _row,
+                 unsigned _col)
     : text(std::move(_text)), row(_row), col(_col), token(_token) {}
 
 std::string uc::Token::to_string() const {
