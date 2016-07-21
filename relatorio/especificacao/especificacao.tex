@@ -1,0 +1,513 @@
+\documentclass[a4paper, 11pt, article]{memoir}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{listings}
+\lstset{language=C++}
+\lstset{keepspaces=true}
+\lstset{frame=lines}
+\lstset{numbers=left}
+\usepackage{caption}
+\captionsetup[table]{name=Tabela}
+\usepackage[brazilian]{babel}
+
+\title{Ultima}
+\author{BELO, Bruno da Silva \and ROCHA, Wesley Marques}
+\date{\today}
+\newcommand{\institution}{Universidade Federal de Alagoas
+  \\ Instituto de Computação}
+\newcommand{\department}{Ciência da Computação}
+
+\renewcommand{\maketitlehooka}{
+  \centering
+  \institution\\
+  \emph{\department}\\[.2cm]
+  \par
+  \hrulefill
+  \vfill}
+\renewcommand{\maketitlehookb}{\vfill}
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\makeatletter
+\let\l@subsection\l@section
+\let\l@section\l@chapter
+\makeatother
+\setsecnumdepth{subsection}
+
+\begin{document}
+
+\frontmatter
+\begin{titlingpage}
+  \maketitle
+\end{titlingpage}
+
+\tableofcontents
+
+\mainmatter
+
+\section{Introdução}
+\label{sec:intro}
+Ultima se trata de uma linguagem procedural, estaticamente e fortemente tipada.
+O programa normalmente consiste de um entry-point, a função main, onde o
+algoritmo será escrito, delimitado por um escopo e cada instrução deverá
+terminar com um ponto e vírgula.
+
+Será possível a criação de funções para melhorar a legibilidade e
+escritabilidade do código. Estas funções devem ser declaradas e definidas, não
+somente declarar, antes do entry-point do programa.
+
+Seja na função main ou uma função qualquer criada, o algoritmo será definido
+usando declaração e variável, estruturas condicionais e de controle.
+
+\section{Conjunto de Tipo de Dados}
+\label{sec:conjunto}
+
+\subsection{ID}
+\label{subsec:id}
+Um identificador aceito por Ultima é dado da seguinte forma:
+\begin{itemize}
+\item Inicia-se, obrigatoriamente, com uma letra, maiúscula e minúscula.
+\item Os demais caracteres podem ser letras, números ou underscore.
+\item Podem possuir qualquer tamanho, porém todo o nome não pode ter uma quebra
+  de linha no meio.
+\end{itemize}
+
+Exemplo:
+\begin{lstlisting}
+  int esta_variavel_pode_ser_declarada; # Certo
+  int esta_variavel_nao
+  _pode_ser_declarada; # Errado
+\end{lstlisting}
+
+\subsection{Comentário}
+\label{subsec:comentario}
+O caractere para expressar um comentário é o ``\#'', assim quando este caractere
+for encontrado, o restante da linha depois dele é ignorada.
+Ultima não possui comentário de bloco, somente de linha.
+
+\subsection{Inteiro}
+\label{subsec:inteiro}
+O tipo inteiro é declarado pela palavra reservada ``int'' seguido do ID da
+variável. Por ser uma linguagem fortemente tipada, não há coerção entre tipos.
+
+Ela expressa um número inteiro e seus literais são declarado por qualquer
+número. As operações para este tipo estão em \ref{subsec:aritmeticos}.
+
+Exemplo:
+\begin{lstlisting}
+  int var;
+  var = 1;
+\end{lstlisting}
+
+\subsection{Ponto flutuante}
+\label{subsec:float}
+O tipo que representa ponto flutuante é declarado utilizando a palavra reservada
+``float'' seguido do ID da variável.
+
+Um literal do tipo ponto flutuante é dado por qualquer número separado por
+somente um ``.'', assim antes do ``.'' indica o parte inteira e depois dele é a
+parte decimal. As operações para este tipo estão em \ref{subsec:aritmeticos}.
+
+Exemplo:
+\begin{lstlisting}
+  float var;
+  var = 1.2;
+\end{lstlisting}
+
+\subsection{Caracteres e cadeias de caracteres}
+\label{subsec:string}
+Ultima tratará cadeias de caracteres usando apenas o tipo ``string'', do mesmo
+modo será tratado caracteres isolados. As operações para este tipo estão em
+\ref{subsec:concatenacao}.
+
+Exemplo:
+\begin{lstlisting}
+  string str;
+  str = ``Hello World!'';
+
+  string character;
+  character = ``A'';
+\end{lstlisting}
+
+Dentro de literais de cadeias de caracteres (Delimitados por aspas duplas),
+palavras reservadas podem ser usados. Quebra de linha dentro de um literal de
+cadeias de caracteres é proibido.
+
+Exemplo:
+\begin{lstlisting}
+  string str;
+  str = ``Esta string nao
+  e valida!'';
+\end{lstlisting}
+
+\subsection{Booleano}
+\label{subsec:booleano}
+O tipo booleano é declarado usando a palavra reservada ``bool'' seguido do ID da
+variável, os únicos dois possíveis valores para a variável são ``true''
+e ``false''. As operações para este tipo estão em \ref{subsec:relacionais} e
+\ref{subsec:logicos}.
+
+Exemplo:
+\begin{lstlisting}
+  bool var;
+  var = true;
+\end{lstlisting}
+
+\subsection{Arranjos unidimensionais}
+\label{subsec:array}
+Ultima tratará arranjos unidimensionais como listas com acesso aleatório. Para
+serem declaradas, usasse a palavra reservada ``vector'' seguida do tipo que será
+armazenado na lista, seu ID e um ``:'' separando o tamanho da lista utilizando
+um literal ou variável do tipo inteiro.
+
+Exemplo:
+\begin{lstlisting}
+  vector int list:3;
+
+  setValueInt(list, index, value);
+  getValueInt(list, index);
+  removeInt(list, index);
+  addInt(list, value); # adiciona no final da lista.
+\end{lstlisting}
+
+Há quatro operações nativas para lista. Estas são getValue, setValue, remove e
+add cujo final varia a depender do tipo da lista, Int para inteiro, String
+para conjunto de caractere, Float para ponto flutuante e Bool para booleano. Com
+elas será possível fazer as manipulações das listas.
+
+\section{Conjuntos de Operadores}
+\label{sec:operadores}
+
+\subsection{Atribuição}
+\label{subsec:atribuicao}
+A atribuição é feita pelo operador ``='', onde do lado esquerdo é o endereço na
+memória que representa o ID da variável e do lado direito é o valor a ser
+guardado por este endereço de memória. Os dois lados devem possuir o mesmo tipo,
+pois a linguagem não permite coerção.
+Exemplo:
+\begin{lstlisting}
+  variable = 10;
+\end{lstlisting}
+Porém não é possível declarar ou atribuir um conjunto de variáveis.
+
+Exemplo:
+\begin{lstlisting}
+  int a = 1, b = 2, c = 3; # Errado
+  int a = 1;
+  int b = 2;
+  int c = 3; # Certo
+\end{lstlisting}
+
+\subsection{Aritméticos}
+\label{subsec:aritmeticos}
+\begin{itemize}
+\item ``+'': Operador binário que retorna a soma dos dois operandos.
+\item ``-'': Operador binário que retorna a diferença dos dois operandos.
+\item ``*'': Operador binário que retorna a multiplicação dos dois operandos.
+\item ``/'': Operador binário que retorna a divisão dos dois operandos.
+\item ``\%": Operador binário que retorna o resto da divisão dos dois operandos.
+\end{itemize}
+
+O operador unário negativo é ``$\sim$''. Este irá negar valores aritméticos dos
+números, tanto inteiro, quanto ponto flutuante.
+
+Exemplo:
+\begin{lstlisting}
+  int a;
+  int b;
+  a = a + b;
+  b = b - a;
+  a = (a * b) / 2;
+\end{lstlisting}
+
+\subsection{Relacionais}
+\label{subsec:relacionais}
+\begin{itemize}
+\item ``=='': Operador binário que verifica a igualdade entre dois operandos.
+\item ``!='': Operador binário que verifica a desigualdade entre dois operandos.
+\item ``\textless'': Operador binário que verifica se o operando da esquerda é
+  menor que o operando da direita.
+\item ``\textgreater'': Operador binário que verifica se o operando da esquerda
+  é maior que o operando da direita.
+\item ``\textgreater='': Operador binário que verifica se o operando da esquerda
+  é menor ou igual ao operando da direita.
+\item ``\textgreater='': Operador binário que verifica se o operando da esquerda
+  é maior ou igual ao operando da direita.
+\end{itemize}
+
+Exemplo:
+\begin{lstlisting}
+  if (a > b) {
+    # do something
+  }
+\end{lstlisting}
+
+\subsection{Lógicos}
+\label{subsec:logicos}
+\begin{itemize}
+\item $\lnot$: Operador unário que nega uma expressão lógica.
+\item ``\&'': Operador binário que executa um ``and'' lógico.
+\item ``$|$'': Operador binário que executa um ``or'' lógico.
+\end{itemize}
+
+Exemplo:
+\begin{lstlisting}
+  if (a > b | c == d) {
+    # do something
+  }
+\end{lstlisting}
+
+\subsection{Concatenação de cadeias de caracteres}
+\label{subsec:concatenacao}
+A concatenação de cadeias de caracteres será dada pelo operador binário ``+''.
+Este por sua vez, criará uma nova string e atribuirá a ela uma união das duas
+outros strings.
+
+Exemplo:
+\begin{lstlisting}
+  string str = ``This str'' + ``More str'';
+\end{lstlisting}
+
+\section{Precedência e Associatividade}
+\label{sec:precedencia}
+Na Tabela \ref{tab:precedencia} mostrará a precedência e associatividade dos
+operadores, onde a precedência é maior para os que se encontram mais acima.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{r|r}
+
+    Operadores & Associatividade à \\
+    \hline
+    () & Não associativo \\
+    $\lnot$ & Direita \\
+    $\sim$ & Não associativo \\
+    $*$ / \% & Esquerda \\
+    + - & Esquerda \\
+    \textless \textless= \textgreater \textgreater= & Não associativo \\
+    == != & Não associativo \\
+    \& $|$ & Esquerda \\
+    = & Direita
+
+  \end{tabular}
+  \caption{Tabela de precedência e associatividade}
+  \label{tab:precedencia}
+\end{table}
+
+\section{Instruções}
+\label{sec:instrucoes}
+Os conjuntos dos statements é similar ao C e cada statement é terminado por um
+``;'', exceto por if, else, while e for.
+
+\subsection{Estrutura condicional de uma e duas vias}
+\label{sub:estruturacondicional}
+
+\subsubsection{if, if-else}
+\label{subsubsec:if}
+A estrutura condicional ``if'' virá seguida de uma condição lógica dentre de
+parenteses e seu escopo é definido por chaves.
+O algoritmo irá executar o código contido no ``if'', se e somente se, a sua
+condição lógica for verdadeira, caso essa condição não seja satisfeita, é
+possível criar, opcionalmente, uma clausula ``else'', que será executada, se e
+somente se, a condição do ``if'' em conjunto for falsa.
+Exemplo:
+\begin{lstlisting}
+  int a = 10;
+  int b = a;
+  if (a == b) {
+    # do something
+  } else {
+    # do anotherthing
+  }
+\end{lstlisting}
+
+\subsection{Estrutura iterativa com controle lógico}
+\label{subsec:iterativalogico}
+
+\subsubsection{while}
+\label{subsubsec:while}
+``while'' é usado como uma repetição condicional, isto é, a repetição só irá
+parar se a sua condição for falsa.
+
+Exemplo:
+\begin{lstlisting}
+  int a = 0;
+  while (a < 10) {
+    # do something
+    a = a + 1;
+  }
+\end{lstlisting}
+
+\subsection{Estrutura iterativa controlada por contador}
+\label{subsec:iterativacontador}
+
+\subsubsection{for}
+\label{subsubsec:for}
+O ``for'' será uma estrutura de repetição que receberá três parâmetros: índice,
+limite e passo. Ele irá repetir o bloco de código desejado no intervalo
+[\emph{índice}, \emph{limite}) variando em \emph{passo} até todo intervalo
+ser passado.
+
+Exemplo:
+\begin{lstlisting}
+  for (int i = 0; 10; 1) { # i ira variar de 0 a 9 ao passo de 1
+    # do something
+  }
+\end{lstlisting}
+
+\subsection{Entrada e saída}
+\label{subsec:io}
+Ultima terá seis funções nativas responsáveis por entrada e saída, essas seriam:
+
+Para entrada:
+\begin{itemize}
+\item inputString(string str)
+\item inputInt(int i)
+\item inputFloat(float f)
+\end{itemize}
+
+Para saída:
+\begin{itemize}
+\item outputString(string str)
+\item outputInt(int i)
+\item outputFloat(float f)
+\end{itemize}
+
+\subsection{Funções}
+\label{subsec:function}
+Ultima não terá suporte para sobrecarga de funções. Para declarar uma função
+define-se o seu tipo, nome da função e parâmetros com seus tipos dentro de
+parênteses.
+Para chamá-la, basta colocar o nome da função e passar seus parâmetros e o
+retorno é feito pela palavra reservada ``return''.
+
+Exemplo:
+\begin{lstlisting}
+  int sumInt(int x, int y) {
+    return x + y;
+  }
+
+  float sumFloat(float x, float y) {
+    return x + y;
+  }
+
+  void sort(vector int list, int size) {
+    # do shell sort
+  }
+
+  vector int apply_exp(vector int list, int size) {
+    # do median
+  }
+
+  int a;
+  float b;
+
+  a = sumInt(5, 2);
+  b = sumFloat(2.4, ~6.3);
+\end{lstlisting}
+
+Para Arranjos unidimensionais, a passagem de parâmetros é feita por referência,
+os outros tipos são por valor.
+
+Para funções há um tipo especial chamado ``void'', em que significa que tal
+função retornará nenhum tipo. Não é possível uma variável ser do tipo ``void''.
+
+Já para conjunto unidimensionais, é necessário colocar a palavra ``vector'' para
+indicar que uma lista será passada como parâmetro ou retornada.
+\section{Exemplos de Códigos}
+\label{sec:code}
+
+\subsection{Olá mundo}
+\label{subsec:helloworld}
+\begin{lstlisting}
+  int main() {
+    outputString(``Hello World!'');
+
+    return 0;
+  }
+\end{lstlisting}
+
+\subsection{Fibonacci}
+\label{subsec:fibonacci}
+\begin{lstlisting}
+  int fibonacci(int n) {
+    int f1 = 0;
+    int f2 = 1;
+    int fi = 0;
+
+    if (n < 0) {
+      return 0;
+    }
+
+    outputInt(0);
+    outputString(``, ``);
+    outputInt(1);
+
+    if (n == 0 | n == 1) {
+      return 1;
+    }
+
+    while(fi < n) {
+      fi = f1 + f2;
+      f1 = f2;
+      f2 = fi;
+      outputString(``, ``);
+      outputInt(fi);
+    }
+
+    return fi;
+  }
+
+  int main() {
+    int n;
+    inputInt(n);
+
+    int fib = fibonacci(n);
+    # do something with fib
+    return 0;
+  }
+\end{lstlisting}
+
+\subsection{Shell sort}
+\label{subsec:shelsort}
+\begin{lstlisting}
+  void shellsort(vector int vet, int size) {
+    int value;
+    int gap = 1;
+    while(gap < size) {
+      gap = 3 * gap + 1;
+    }
+
+    while(gap > 1) {
+      gap = gap / 3;
+      for (int i = gap; i < size; i = i + 1) {
+        value = getValue(vet, i);
+        int j = i - gap;
+
+        while(j >= 0 & value < getValue(vet, j)) {
+          setValue(vet, j + gap, getValue(vet, j));
+          j = j - gap;
+        }
+
+        setValue(vet, j + gap, value);
+      }
+    }
+  }
+
+  int main() {
+    int size;
+    inputInt(size);
+
+    int vet:size;
+    for (int i = 0; size; 1) {
+      int x;
+      inputInt(x);
+      add(vet, x);
+    }
+
+    shellsort(vet, size);
+
+    return 0;
+  }
+\end{lstlisting}
+\end{document}
