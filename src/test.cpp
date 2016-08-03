@@ -12,25 +12,23 @@
 
 TEST_CASE("Testing the type's tokens", "[token]") {
   SECTION("Testing human case readness") {
-    REQUIRE("Char" == uc::get_type(uc::kind_t::CHAR));
-    REQUIRE("Int" == uc::get_type(uc::kind_t::INT));
-    REQUIRE("Float" == uc::get_type(uc::kind_t::FLOAT));
-    REQUIRE("String" == uc::get_type(uc::kind_t::STRING));
-    REQUIRE("Error" == uc::get_type(uc::kind_t::ERROR));
-    REQUIRE("Identifier" == uc::get_type(uc::kind_t::IDENTIFIER));
-    REQUIRE("Int Literal" == uc::get_type(uc::kind_t::INT_LITERAL));
-    REQUIRE("Char Literal" == uc::get_type(uc::kind_t::CHAR_LITERAL));
-    REQUIRE("Float Literal" == uc::get_type(uc::kind_t::FLOAT_LITERAL));
-    REQUIRE("String Literal" == uc::get_type(uc::kind_t::STRING_LITERAL));
-    REQUIRE("Add Operator" == uc::get_type(uc::kind_t::ADD_OPERATOR));
-    REQUIRE("Mult Operator" == uc::get_type(uc::kind_t::MULT_OPERATOR));
-    REQUIRE("Rel Operator" == uc::get_type(uc::kind_t::REL_OPERATOR));
-    REQUIRE("Atr Operator" == uc::get_type(uc::kind_t::ATR_OPERATOR));
-    REQUIRE("If Word" == uc::get_type(uc::kind_t::IF));
-    REQUIRE("Else Word" == uc::get_type(uc::kind_t::ELSE));
-    REQUIRE("While Word" == uc::get_type(uc::kind_t::WHILE));
-    REQUIRE("For Word" == uc::get_type(uc::kind_t::FOR));
-    REQUIRE("File's End" == uc::get_type(uc::kind_t::FE));
+    REQUIRE("int_t" == uc::get_type(uc::kind_t::int_t));
+    REQUIRE("float_t" == uc::get_type(uc::kind_t::float_t));
+    REQUIRE("string_t" == uc::get_type(uc::kind_t::string_t));
+    REQUIRE("error" == uc::get_type(uc::kind_t::error));
+    REQUIRE("id_t" == uc::get_type(uc::kind_t::id_t));
+    REQUIRE("int_l" == uc::get_type(uc::kind_t::int_l));
+    REQUIRE("float_l" == uc::get_type(uc::kind_t::float_l));
+    REQUIRE("string_l" == uc::get_type(uc::kind_t::string_l));
+    REQUIRE("add_o" == uc::get_type(uc::kind_t::add_o));
+    REQUIRE("mult_o" == uc::get_type(uc::kind_t::mult_o));
+    REQUIRE("r_o" == uc::get_type(uc::kind_t::r_o));
+    REQUIRE("atr_o" == uc::get_type(uc::kind_t::atr_o));
+    REQUIRE("if_c" == uc::get_type(uc::kind_t::if_c));
+    REQUIRE("else_c" == uc::get_type(uc::kind_t::else_c));
+    REQUIRE("while_c" == uc::get_type(uc::kind_t::while_c));
+    REQUIRE("for_c" == uc::get_type(uc::kind_t::for_c));
+    REQUIRE("File's End" == uc::get_type(uc::kind_t::fe));
   }
 }
 

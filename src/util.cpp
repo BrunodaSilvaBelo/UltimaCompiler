@@ -8,7 +8,7 @@ std::string uc::show_token_to_alcino(std::vector<Token> const& container) {
 
   for (auto& token : container) {
     auto position                          = token.get_position();
-    m_map[position.first][position.second] = get_type(token.get_kind());
+    m_map[position.first][position.second] = token.to_string();
   }
 
   std::string out = "";

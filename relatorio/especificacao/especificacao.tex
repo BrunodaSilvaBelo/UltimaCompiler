@@ -498,14 +498,15 @@ indicar que uma lista será passada como parâmetro ou retornada.
     int size;
     inputInt(size);
 
-    int vet:size;
+    vector int vet:size;
     for (int i = 0; size; 1) {
       int x;
       inputInt(x);
-      add(vet, x);
+      addInt(vet, x);
     }
 
     shellsort(vet, size);
+    # do something with vet
 
     return 0;
   }

@@ -4,9 +4,7 @@
 #include <stdio.h>
 
 namespace {
-struct characters {
-  static constexpr char COMMENT = '#';
-};
+constexpr char COMMENT = '#';
 }
 
 uc::Lexer::Lexer(std::string const& source) : code(std::move(source)) {}
@@ -21,6 +19,7 @@ uc::Token uc::Lexer::get_next_token() {
 
   static char last_char = next_character();
 
+  // Ignored caracteres
   while (isspace(last_char)) {
     if (last_char == '\n') {
       ++row;
@@ -29,59 +28,108 @@ uc::Token uc::Lexer::get_next_token() {
     last_char = next_character();
   }
 
+  // Names
   if (isalpha(last_char) || last_char == '_') {
-    std::string lexema = std::string(1, last_char);
+    std::string lexval = std::string(1, last_char);
     last_char          = next_character();
 
     while (isalnum(last_char) || last_char == '_') {
-      lexema += last_char;
+      lexval += last_char;
       last_char = next_character();
     }
 
-    if (lexema == "int")
-      return get_token(uc::kind_t::INT, std::move(lexema));
-    else if (lexema == "char")
-      return get_token(uc::kind_t::CHAR, std::move(lexema));
-    else if (lexema == "float")
-      return get_token(uc::kind_t::FLOAT, std::move(lexema));
-    else if (lexema == "string")
-      return get_token(uc::kind_t::STRING, std::move(lexema));
-    else if (lexema == "while")
-      return get_token(uc::kind_t::WHILE, std::move(lexema));
-    else if (lexema == "if")
-      return get_token(uc::kind_t::IF, std::move(lexema));
-    else if (lexema == "else")
-      return get_token(uc::kind_t::ELSE, std::move(lexema));
-    else if (lexema == "for")
-      return get_token(uc::kind_t::FOR, std::move(lexema));
+    if (lexval == "int")
+      return get_token(uc::kind_t::int_t, std::move(lexval));
+    if (lexval == "float")
+      return get_token(uc::kind_t::float_t, std::move(lexval));
+    if (lexval == "string")
+      return get_token(uc::kind_t::string_t, std::move(lexval));
+    if (lexval == "void")
+      return get_token(uc::kind_t::void_t, std::move(lexval));
+    if (lexval == "while")
+      return get_token(uc::kind_t::while_c, std::move(lexval));
+    if (lexval == "if")
+      return get_token(uc::kind_t::if_c, std::move(lexval));
+    if (lexval == "else")
+      return get_token(uc::kind_t::else_c, std::move(lexval));
+    if (lexval == "for")
+      return get_token(uc::kind_t::for_c, std::move(lexval));
+    if (lexval == "return")
+      return get_token(uc::kind_t::return_c, std::move(lexval));
 
-    return get_token(uc::kind_t::IDENTIFIER, std::move(lexema));
+    return get_token(uc::kind_t::id_t, std::move(lexval));
   }
 
+  // Numbers
   if (isdigit(last_char)) {
-    std::string lexema = std::string(1, last_char);
+    std::string lexval = std::string(1, last_char);
     while (isdigit(last_char = next_character()))
-      lexema += last_char;
+      lexval += last_char;
 
     if (last_char == '.') {
-      lexema += last_char;
+      lexval += last_char;
       while (isdigit(last_char = next_character()))
-        lexema += last_char;
+        lexval += last_char;
 
-      return get_token(uc::kind_t::FLOAT_LITERAL, std::move(lexema));
+      return get_token(uc::kind_t::float_l, std::move(lexval));
     }
 
-    return get_token(uc::kind_t::INT_LITERAL, std::move(lexema));
+    return get_token(uc::kind_t::int_l, std::move(lexval));
   }
 
+  // strings
+  if (last_char == '"') {
+    std::string lexval = std::string(1, last_char);
+    while ((last_char = next_character()) != '"') {
+      if (last_char == EOF) {
+        return get_token(uc::kind_t::quotation, std::move(lexval));
+      }
+
+      if (last_char != '\n') {
+        lexval += last_char;
+        continue;
+      }
+
+      auto token = get_token(uc::kind_t::error, std::move(lexval));
+      ++row;
+      col       = 0;
+      last_char = next_character();
+      return token;
+    }
+
+    lexval += last_char;
+    last_char = next_character();
+    return get_token(uc::kind_t::string_l, std::move(lexval));
+  }
+
+  // = or ==
   if (last_char == '=') {
-    std::string lexema = std::string(1, last_char);
+    std::string lexval = std::string(1, last_char);
     last_char          = next_character();
 
-    return get_token(uc::kind_t::ATR_OPERATOR, std::move(lexema));
+    if (last_char == '=') {
+      lexval += last_char;
+      last_char = next_character();
+    }
+
+    return get_token(uc::kind_t::atr_o, std::move(lexval));
   }
 
-  if (last_char == characters::COMMENT) {
+  // < ,<=, > or >=
+  if ((last_char == '<') || (last_char == '>')) {
+    std::string lexval = std::string(1, last_char);
+    last_char          = next_character();
+
+    if (last_char == '=') {
+      lexval += last_char;
+      last_char = next_character();
+    }
+
+    return get_token(uc::kind_t::r_o, std::move(lexval));
+  }
+
+  // Comentaries
+  if (last_char == COMMENT) {
     do {
       last_char = next_character();
     } while (last_char != EOF && last_char != '\n');
@@ -90,24 +138,48 @@ uc::Token uc::Lexer::get_next_token() {
       return get_next_token();
   }
 
+  // EOF
   if (last_char == EOF)
-    return get_token(uc::kind_t::FE, "");
+    return get_token(uc::kind_t::fe, "");
 
   auto one_char              = last_char;
   last_char                  = next_character();
   static auto one_char_token = [this](char& character) {
     if (character == '+' || character == '-')
-      return get_token(uc::kind_t::ADD_OPERATOR, std::string(1, character));
+      return get_token(uc::kind_t::add_o, std::string(1, character));
     if (character == '*' || character == '/' || character == '%')
-      return get_token(uc::kind_t::MULT_OPERATOR, std::string(1, character));
+      return get_token(uc::kind_t::mult_o, std::string(1, character));
+    if (character == 169)
+      return get_token(uc::kind_t::neg_o, std::string(1, 169));
+    if (character == '~')
+      return get_token(uc::kind_t::inv_o, std::string(1, character));
+    if (character == '{')
+      return get_token(uc::kind_t::open_brace, std::string(1, character));
+    if (character == '}')
+      return get_token(uc::kind_t::close_brace, std::string(1, character));
+    if (character == '(')
+      return get_token(uc::kind_t::open_paren, std::string(1, character));
+    if (character == ')')
+      return get_token(uc::kind_t::close_paren, std::string(1, character));
+    if (character == ';')
+      return get_token(uc::kind_t::semicolon, std::string(1, character));
+    if (character == ':')
+      return get_token(uc::kind_t::colon, std::string(1, character));
+    if (character == ',')
+      return get_token(uc::kind_t::comma, std::string(1, character));
+    if (character == '|')
+      return get_token(uc::kind_t::or_o, std::string(1, character));
+    if (character == '&')
+      return get_token(uc::kind_t::and_o, std::string(1, character));
 
-    return get_token(uc::kind_t::ERROR, std::string(1, character));
+    return get_token(uc::kind_t::error, std::string(1, character));
   };
+
   return one_char_token(one_char);
 }
 
 uc::Token uc::Lexer::get_token(uc::kind_t token,
-                               std::string const& lexema) const {
-  return uc::Token(token, lexema, row,
-                   col - static_cast<unsigned>(lexema.size()));
+                               std::string const& lexval) const {
+  unsigned size = lexval.size();
+  return uc::Token(token, std::move(lexval), row, col - size);
 }

@@ -1,0 +1,167 @@
+\documentclass[12pt, a4paper]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{indentfirst}
+
+\author{BELO, Bruno da Silva \and ROCHA, Wesley Marques}
+\title{Linguagem Ultima
+  \\ Especificação dos tokens}
+
+\begin{document}
+\maketitle
+
+O compilador será feito na linguagem C++.
+\begin{itemize}
+\item \textbf{Caracteres}
+  \begin{itemize}
+  \item   \emph{letter} = "A" $|$ "B" $|$ "C" $|$ "D" $|$ "E" $|$ "F" $|$ "G"
+    $|$ "H" $|$ "I" $|$ "J" $|$ "K" $|$ "L" $|$ "M" $|$ "N"
+    $|$ "O" $|$ "P" $|$ "Q" $|$ "R" $|$ "S" $|$ "T" $|$ "U"
+    $|$ "V" $|$ "W" $|$ "X" $|$ "Y" $|$ "Z" $|$ "a" $|$ "b"
+    $|$ "c" $|$ "d" $|$ "e" $|$ "f" $|$ "g" $|$ "h" $|$ "i"
+    $|$ "j" $|$ "k" $|$ "l" $|$ "m" $|$ "n" $|$ "o" $|$ "p"
+    $|$ "q" $|$ "r" $|$ "s" $|$ "t" $|$ "u" $|$ "v" $|$ "w"
+    $|$ "x" $|$ "y" $|$ "z";
+
+  \item \emph{digit} = "0" $|$ "1" $|$ "2" $|$ "3" $|$ "4" $|$ "5" $|$ "6"
+    $|$ "7" $|$ "8" $|$ "9";
+
+  \item \emph{alpha} = \emph{letter} $|$ \emph{digit};
+  \item \emph{all\_characters} = ? Todos caracteres visíveis ?;
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Operadores Aritméticos}
+  \begin{itemize}
+  \item \emph{add\_o} = ``+'' $|$ ``-'';
+  \item \emph{mult\_o} = ``*'' $|$ ``/'' $|$ ``\%";
+  \item \emph{inv\_o} = ``$\sim$'';
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Operadores de Atribuição}
+  \begin{itemize}
+  \item \emph{atr\_o} = ``='';
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Operadores Relacionais}
+  \begin{itemize}
+  \item \emph{r\_o} = ``\textless'' $|$ ``\textless='' $|$ ``\textgreater''
+    $|$ ``\textgreater='';
+  \item \emph{re\_o} = ``=='' $|$ ``!='';
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Operadores Lógicos}
+  \begin{itemize}
+  \item \emph{or\_o} = ``$|$'';
+  \item \emph{and\_o} = ``\&'';
+  \item \emph{neg\_o} = ``$\lnot$'';
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Delimitadores de Escopo e Símbolos}
+  \begin{itemize}
+  \item \emph{open\_paren} = ``(``;
+  \item \emph{close\_paren} = ``)'';
+  \item \emph{open\_brace} = ``\{``;
+  \item \emph{close\_brace} = ``\}'';
+  \item \emph{semicolon} = ``;'';
+  \item \emph{colon} = ``:'';
+  \item \emph{quotation} = `` " ``;
+  \item \emph{comma} = ``,'';
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Comentário}
+  \begin{itemize}
+  \item \emph{commentary} = ``\#'';
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Retorno de Função}
+  \begin{itemize}
+  \item \emph{return} = ``return'';
+  \end{itemize}
+\end{itemize}
+\begin{itemize}
+\item \textbf{Tipos e seus Literais}
+  \begin{itemize}
+  \item \textsf{ID}
+    \begin{itemize}
+    \item \emph{id\_t} = \emph{letter} \{``\_'' $|$ \emph{alpha}\};
+    \end{itemize}
+  \end{itemize}
+  \begin{itemize}
+  \item \textsf{Inteiro}
+    \begin{itemize}
+    \item \emph{int\_t} = ``int'';
+    \item \emph{int\_l} = \emph{digit} \{\emph{digit}\};
+    \end{itemize}
+  \end{itemize}
+  \begin{itemize}
+  \item \textsf{Float}
+    \begin{itemize}
+    \item \emph{float\_t} = ``float'';
+    \item \emph{float\_l} = \emph{digit} \{\emph{digit}\} ``.'' \emph{digit}
+      \{\emph{digit}\};
+    \end{itemize}
+  \end{itemize}
+  \begin{itemize}
+  \item \textsf{String}
+    \begin{itemize}
+    \item \emph{string\_t} = ``string'';
+    \item \emph{string\_l} = \emph{quotation} {\emph{all\_characters}}
+      \emph{quotation};
+    \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+  \item \textsf{Booleano}
+    \begin{itemize}
+    \item \emph{bool\_t} = ``bool'';
+    \item \emph{bool\_l} = ``true'' $|$ ``false'';
+    \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+  \item \textsf{Lista}
+    \begin{itemize}
+    \item \emph{vector\_t} = ``vector'';
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Comandos}
+  \begin{itemize}
+  \item \textsf{Iteração por controle lógico}
+    \begin{itemize}
+    \item \emph{while\_c} = ``while'';
+    \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+  \item \textsf{Iteração por contador}
+    \begin{itemize}
+    \item \emph{for\_c} = ``for'';
+    \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+  \item \textsf{Condicionais de uma ou duas vias}
+    \begin{itemize}
+    \item \emph{if\_c} = ``if'';
+    \item \emph{else\_c} = ``else'';
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\end{document}
