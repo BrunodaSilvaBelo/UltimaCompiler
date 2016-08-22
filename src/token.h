@@ -60,11 +60,11 @@ public:
   /**
      @brief The default constructor.
      @param _token The type of the token.
-     @param _text The name of the type.
+     @param _lexval The name of the type.
      @param _row The row that token is.
      @param _col The column that token is.
   */
-  Token(kind_t _token, std::string const& _text, unsigned _row, unsigned _col);
+  Token(kind_t _token, std::string const& _lexval, unsigned _row, unsigned _col);
   /**
      @brief It can print the class.
      @return std::string A string with the contents of the token.
@@ -81,7 +81,7 @@ public:
   kind_t get_kind() const;
 
 private:
-  std::string text;
+  std::string lexval;
   unsigned row;
   unsigned col;
   kind_t token;

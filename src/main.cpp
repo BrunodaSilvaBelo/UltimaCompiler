@@ -28,11 +28,11 @@ int main(int argc, char** argv) {
     return -1;
   }
 
-  auto t = lexer.get_next_token();
+  auto t = lexer.nextToken();
   std::vector<uc::Token> tokens;
   while (!t.has_ended()) {
     tokens.push_back(t);
-    t = lexer.get_next_token();
+    t = lexer.nextToken();
   }
 
   auto s = uc::show_token_to_alcino(std::move(tokens));

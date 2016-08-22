@@ -10,14 +10,14 @@ class Lexer {
 public:
   explicit Lexer(std::string const& source);
   bool is_ready() const;
-  Token get_next_token();
+  Token nextToken();
 
 private:
   std::fstream code;
   unsigned row = 1;
   unsigned col = 0;
 
-  Token get_token(kind_t token, std::string const& lexema) const;
+  Token get_token(kind_t token, std::string const& lexval) const;
 };
 } // namespace uc
 

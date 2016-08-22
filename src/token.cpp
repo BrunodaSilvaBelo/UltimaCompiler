@@ -7,14 +7,14 @@
 
 #include "token.h"
 
-uc::Token::Token(kind_t _token, std::string const& _text, unsigned _row,
+uc::Token::Token(kind_t _token, std::string const& _lexval, unsigned _row,
                  unsigned _col)
-    : text(std::move(_text)), row(_row), col(_col), token(_token) {}
+    : lexval(std::move(_lexval)), row(_row), col(_col), token(_token) {}
 
 std::string uc::Token::to_string() const {
   std::string out = "[";
   out += std::to_string(row) + ", " + std::to_string(col) + ", " +
-         get_type(token) + ", " + text + "]";
+         get_type(token) + ", " + lexval + "]";
 
   return out;
 }

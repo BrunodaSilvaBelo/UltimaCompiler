@@ -11,7 +11,7 @@ uc::Lexer::Lexer(std::string const& source) : code(std::move(source)) {}
 
 bool uc::Lexer::is_ready() const { return code.is_open(); }
 
-uc::Token uc::Lexer::get_next_token() {
+uc::Token uc::Lexer::nextToken() {
   static auto next_character = [this]() {
     ++col;
     return static_cast<char>(code.get());
@@ -135,7 +135,7 @@ uc::Token uc::Lexer::get_next_token() {
     } while (last_char != EOF && last_char != '\n');
 
     if (last_char != EOF)
-      return get_next_token();
+      return nextToken();
   }
 
   // EOF
@@ -149,8 +149,8 @@ uc::Token uc::Lexer::get_next_token() {
       return get_token(uc::kind_t::add_o, std::string(1, character));
     if (character == '*' || character == '/' || character == '%')
       return get_token(uc::kind_t::mult_o, std::string(1, character));
-    if (character == 169)
-      return get_token(uc::kind_t::neg_o, std::string(1, 169));
+    if (character == '\302')
+      return get_token(uc::kind_t::neg_o, std::string(1, '\302'));
     if (character == '~')
       return get_token(uc::kind_t::inv_o, std::string(1, character));
     if (character == '{')
