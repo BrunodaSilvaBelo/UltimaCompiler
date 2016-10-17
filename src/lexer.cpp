@@ -46,6 +46,10 @@ uc::Token uc::Lexer::nextToken() {
       return get_token(uc::kind_t::string_t, std::move(lexval));
     if (lexval == "void")
       return get_token(uc::kind_t::void_t, std::move(lexval));
+    if (lexval == "bool")
+      return get_token(uc::kind_t::bool_t, std::move(lexval));
+    if (lexval == "true" || lexval == "false")
+      return get_token(uc::kind_t::bool_l, std::move(lexval));
     if (lexval == "while")
       return get_token(uc::kind_t::while_c, std::move(lexval));
     if (lexval == "if")
@@ -56,6 +60,10 @@ uc::Token uc::Lexer::nextToken() {
       return get_token(uc::kind_t::for_c, std::move(lexval));
     if (lexval == "return")
       return get_token(uc::kind_t::return_c, std::move(lexval));
+    if (lexval == "main")
+      return get_token(uc::kind_t::main_c, std::move(lexval));
+    if (lexval == "vector")
+      return get_token(uc::kind_t::vector_t, std::move(lexval));
 
     return get_token(uc::kind_t::id_t, std::move(lexval));
   }
@@ -110,6 +118,7 @@ uc::Token uc::Lexer::nextToken() {
     if (last_char == '=') {
       lexval += last_char;
       last_char = next_character();
+      return get_token(uc::kind_t::re_o, std::move(lexval));
     }
 
     return get_token(uc::kind_t::atr_o, std::move(lexval));

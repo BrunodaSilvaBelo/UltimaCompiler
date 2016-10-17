@@ -1,4 +1,4 @@
-void shellsort(vector int vet, int size) {
+void shellsort(vector vet, int size) {
   int value;
   int gap = 1;
   while (gap < size) {
@@ -7,12 +7,13 @@ void shellsort(vector int vet, int size) {
 
   while (gap > 1) {
     gap = gap / 3;
-    for (int i = gap; i < size; i = i + 1) {
+    for (int i = gap; 10; 1) {
       value = getValue(vet, i);
       int j = i - gap;
 
-      while (j >= 0 & value < getValue(vet, j)) {
-        setValue(vet, j + gap, getValue(vet, j));
+      int x = getValue(vet, j);
+      while (j >= 0 & value < x) {
+        setValue(vet, j + gap, x);
         j = j - gap;
       }
 

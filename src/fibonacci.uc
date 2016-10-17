@@ -4,7 +4,7 @@ int fibonacci(int n) {
   int fi = 0;
 
   if (n < 0) {
-    return 0;
+  fi = 0;
   }
 
   outputInt(0);
@@ -12,7 +12,7 @@ int fibonacci(int n) {
   outputInt(1);
 
   if (n == 0 | n == 1) {
-    return 1;
+  fi = n;
   }
 
   while (fi < n) {

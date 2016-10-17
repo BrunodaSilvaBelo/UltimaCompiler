@@ -1,0 +1,105 @@
+\documentclass[12pt, a4paper]{memoir}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{indentfirst}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\lstdefinestyle{code} {
+  language=C++,
+  keepspaces=true,
+  frame=lines,
+  numbers=left,
+  columns=flexible
+}
+
+\lstdefinestyle{result} {
+  basicstyle=\small\ttfamily,
+  columns=flexible,
+  breaklines=true
+}
+
+\title{Linguagem Ultima
+  \\ Analisador Sintático}
+\author{BELO, Bruno da Silva \and ROCHA, Wesley Marques}
+\date{\today}
+\newcommand{\institution}{Universidade Federal de Alagoas
+  \\ Instituto de Computação}
+\newcommand{\department}{Ciência da Computação}
+
+\renewcommand{\maketitlehooka}{
+  \centering
+  \institution\\
+  \emph{\department}\\[.2cm]
+  \par
+  \hrulefill
+  \vfill}
+\renewcommand{\maketitlehookb}{\vfill}
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\makeatletter
+\let\l@subsection\l@section
+\let\l@section\l@chapter
+\makeatother
+\setsecnumdepth{subsection}
+
+\begin{document}
+
+\frontmatter
+\begin{titlingpage}
+  \maketitle
+\end{titlingpage}
+
+\tableofcontents
+
+\mainmatter
+
+\section{Códigos-fontes}
+\label{sec:codigo_fonte}
+
+\emph{Só foram adicionados os códigos-fontes criados depois do léxico, os códigos-fontes que não estão aqui sofreram nenhuma ou pouca modificação para poder se adequar}
+\lstinputlisting[style=code, label=syntax.cpp, caption=syntax.cpp]{../../src/syntax.cpp}
+
+\lstinputlisting[style=code, label=syntax.h, caption=syntax.h]{../../src/syntax.h}
+
+\lstinputlisting[style=code, label=main.cpp, caption=main.cpp]{../../src/main.cpp}
+
+Este arquivo é a tabela do analisador. Cada linha representa uma derivação da tabela, onde o primeiro número é o não-terminal, o segundo é o terminal e o terceiro é a derivação em si, pórem o número da derivação do arquivo é $-1$ o tabela, por conta que o array começa do 0 e não do 1, assim, por exemplo, a D3 é o 2 no arquivo.
+\lstinputlisting[style=code, label=syntax.conf, caption=syntax.conf]{../../src/syntax.conf}
+
+\section{Resultados}
+\emph{\$ representa a produção vazia}
+\subsection{Olá Mundo}
+\label{subsec:hello}
+\lstinputlisting[style=code, label=hello.res, caption=Resultado de Hello World]{../../build/hello.res}
+
+\subsection{Fibonacci}
+\label{subsec:fibonacci}
+
+\lstinputlisting[style=code, label=fibonacci.res, caption=Resultado de Fibonacci]{../../build/fibonacci.res}
+
+\subsection{Shellsort}
+\label{subsec:shellsort}
+
+\lstinputlisting[style=code, label=shellsort.res, caption=Resultado de Shellsort]{../../build/shellsort.res}
+
+\section*{Apêndice}
+Pelo fato da gramática está mal formulada, alguns erros foram encontrado nela, como:
+\begin{lstlisting}[style=code]
+  int foo(vector int a:5) {
+    int x = 4;
+    if (x < foo2(1)) {
+      return 2;
+    }
+
+    return 0;
+  }
+\end{lstlisting}
+Dado o exemplo acima, há 3 coisas que na gramática ficou devendo.
+\begin{enumerate}
+\item Em foo(vector int a:5), a gramática não consegue identificar o ``vector int a:5'', ela está identificando só consegue com ``foo(vector a)''.
+\item O retorno dentro do ``if'' não é possível na gramática, pois só se foi considerado retorno de fim de função, logo não há uma produção que suporta retornos no meio da função.
+\item Em ``if(x < foo2(1))'', a gramática não suporta chamada de funções dentro de expressões.
+\end{enumerate}
+\end{document}

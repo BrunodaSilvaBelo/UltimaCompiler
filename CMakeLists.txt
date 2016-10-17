@@ -55,6 +55,7 @@ set( SOURCE ${SOURCE}
   "${PROJECT_SOURCE_DIR}/src/token.cpp"
   "${PROJECT_SOURCE_DIR}/src/lexer.cpp"
   "${PROJECT_SOURCE_DIR}/src/util.cpp"
+  "${PROJECT_SOURCE_DIR}/src/syntax.cpp"
   )
 add_library ( ${LIB_NAME}
   ${LIBRARY_TYPE}

@@ -27,6 +27,8 @@ std::pair<unsigned, unsigned> uc::Token::get_position() const {
 
 uc::kind_t uc::Token::get_kind() const { return token; }
 
+std::string uc::Token::get_lexval() const { return lexval; }
+
 std::string uc::get_type(kind_t const token) {
   switch (token) {
   case kind_t::id_t:
@@ -45,6 +47,10 @@ std::string uc::get_type(kind_t const token) {
     return std::string("string_l");
   case kind_t::vector_t:
     return std::string("vector_t");
+  case kind_t::bool_t:
+    return std::string("bool_t");
+  case kind_t::bool_l:
+    return std::string("bool_l");
   case kind_t::void_t:
     return std::string("void_t");
   case kind_t::add_o:
@@ -73,6 +79,8 @@ std::string uc::get_type(kind_t const token) {
     return std::string("while_c");
   case kind_t::for_c:
     return std::string("for_c");
+  case kind_t::main_c:
+    return std::string("main_c");
   case kind_t::open_paren:
     return std::string("open_paren");
   case kind_t::close_paren:

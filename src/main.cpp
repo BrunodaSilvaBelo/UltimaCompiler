@@ -11,33 +11,18 @@
    @see http://clang.llvm.org/docs/ClangFormat.html
 */
 #include "gsl/gsl_assert.h"
-#include "lexer.h"
-#include "token.h"
-#include "util.h"
-#include <algorithm>
-#include <stdio.h>
+#include "syntax.h"
 #include <string>
-#include <vector>
+
+namespace {
+const std::string conf_file = "../src/syntax.conf";
+}
 
 int main(int argc, char** argv) {
   Expects(argc >= 2);
 
-  uc::Lexer lexer(argv[1]);
-  if (!lexer.is_ready()) {
-    fprintf(stderr, "Error while opening the source code!\n");
-    return -1;
-  }
-
-  auto t = lexer.nextToken();
-  std::vector<uc::Token> tokens;
-  while (!t.has_ended()) {
-    tokens.push_back(t);
-    t = lexer.nextToken();
-  }
-
-  auto s = uc::show_token_to_alcino(std::move(tokens));
-
-  printf("%s\n", s.c_str());
+  uc::Syntax syn(argv[1], conf_file);
+  syn.run();
 
   return 0;
 }

@@ -13,7 +13,7 @@
 #include <utility>
 
 namespace uc {
-enum class kind_t : uint8_t {
+enum class kind_t : size_t {
   int_t = 0x0,
   int_l,
   float_t,
@@ -22,6 +22,8 @@ enum class kind_t : uint8_t {
   string_l,
   vector_t,
   void_t,
+  bool_t,
+  bool_l,
   id_t,
   add_o,
   mult_o,
@@ -46,6 +48,7 @@ enum class kind_t : uint8_t {
   dot,
   comma,
   return_c,
+  main_c,
 
   fe,
   error = 0xff
@@ -64,7 +67,8 @@ public:
      @param _row The row that token is.
      @param _col The column that token is.
   */
-  Token(kind_t _token, std::string const& _lexval, unsigned _row, unsigned _col);
+  Token(kind_t _token, std::string const& _lexval, unsigned _row = 0,
+        unsigned _col = 0);
   /**
      @brief It can print the class.
      @return std::string A string with the contents of the token.
@@ -79,6 +83,7 @@ public:
   std::pair<unsigned, unsigned> get_position() const;
 
   kind_t get_kind() const;
+  std::string get_lexval() const;
 
 private:
   std::string lexval;
